@@ -1,0 +1,9 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+sourceCompatibility = 1.6
+versiono = '1.0'
+
+repositories {
+  mavenCentral()
+}
