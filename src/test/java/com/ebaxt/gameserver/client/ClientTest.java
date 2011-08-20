@@ -1,9 +1,14 @@
 package com.ebaxt.gameserver.client;
 
+import org.junit.Test;
+
+import java.io.IOException;
+
 public class ClientTest {
 
-    public void api() {
-        Client client = Client.createClient().connect("localhost", 3333).registerPlayer("Erik", new GameStrategy() {
+    @Test
+    public void api() throws IOException {
+        Client client = Client.createClient().connect("localhost", 3333).registerPlayer("Test", new GameStrategy() {
             public Move firstMove() {
                 return Move.PAPER;
             }

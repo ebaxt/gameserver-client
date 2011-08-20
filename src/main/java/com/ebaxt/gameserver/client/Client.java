@@ -16,20 +16,62 @@ public class Client {
         return new Client();
     }
 
-    public Client registerPlayer(String username, GameStrategy gameStrategy) throws GameserverException {
-        connect("localhost", 3333);
-        String s = readLine();
-        if (s.trim().equals("Enter player name:")) {
-            out.write(username);
-
+    public Client registerPlayer(String username, GameStrategy gameStrategy) throws GameserverException, IOException {
+        if (readLine().trim().startsWith("Enter player name:")) {
+            out.println(username);
+            gameLoop(gameStrategy);
         } else {
-            throw new GameserverException(String.format("Unexpected server response! %s", s.trim()));
+            throw new GameserverException("Unknown server response!");
         }
         return this;
     }
 
+    private void gameLoop(GameStrategy gameStrategy) {
+        String input;
+        do {
+            input = readLine();
+            System.out.println(input);
+            if (input.startsWith(":select")) {
+                write(gameStrategy.firstMove().print());
+            }
+            if (input.startsWith("[:winner")) {
+                System.out.println(readLine());
+                write(gameStrategy.onWin(getOponentMove(input)).print());
+            }
+            if (input.startsWith("[:looser")) {
+                System.out.println(readLine());
+
+                write(gameStrategy.onLoss(getOponentMove(input)).print());
+            }
+            if (input.startsWith("[:tie")) {
+                System.out.println(readLine());
+
+                write(gameStrategy.onTie().print());
+            }
+        } while (true);
+    }
+
+    private Move getOponentMove(String input) {
+        if (input.contains("rock")) {
+            return Move.ROCK;
+        }
+        if (input.contains("paper")) {
+            return Move.PAPER;
+        }
+        if (input.contains("scissors")) {
+            return Move.SCISSORS;
+        }
+        throw new GameserverException("Unexpected input!");
+    }
+
     private void write(String output) {
-        out.write(output);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        System.out.println(output);
+        out.println(output);
     }
 
     private String readLine() {
@@ -53,3 +95,5 @@ public class Client {
         return this;
     }
 }
+
+
