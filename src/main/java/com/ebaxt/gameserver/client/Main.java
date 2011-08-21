@@ -6,7 +6,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        Client.createClient().connect("localhost", 3333).registerPlayer("Test", new GameStrategy() {
+        Client.createClient().connect("localhost", 3333).registerPlayer("Erik", new GameStrategy() {
             public Move firstMove() {
                 return Move.PAPER;
             }

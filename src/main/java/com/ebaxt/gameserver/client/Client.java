@@ -31,27 +31,30 @@ public class Client {
         do {
             input = readLine();
             System.out.println(input);
-            if (input.startsWith(":select")) {
-                write(gameStrategy.firstMove().print());
-            }
-            if (input.startsWith("[:winner")) {
-                System.out.println(readLine());
-                write(gameStrategy.onWin(getOponentMove(input)).print());
-            }
-            if (input.startsWith("[:looser")) {
-                System.out.println(readLine());
+            if (null != input) {
+                if (input.startsWith(":select")) {
+                    write(gameStrategy.firstMove().print());
+                }
+                if (input.startsWith("[:winner")) {
+                    System.out.println(readLine());
+                    write(gameStrategy.onWin(getOponentMove(input)).print());
+                }
+                if (input.startsWith("[:looser")) {
+                    System.out.println(readLine());
 
-                write(gameStrategy.onLoss(getOponentMove(input)).print());
-            }
-            if (input.startsWith("[:tie")) {
-                System.out.println(readLine());
+                    write(gameStrategy.onLoss(getOponentMove(input)).print());
+                }
+                if (input.startsWith("[:tie")) {
+                    System.out.println(readLine());
 
-                write(gameStrategy.onTie().print());
+                    write(gameStrategy.onTie().print());
+                }
             }
         } while (true);
     }
 
     private Move getOponentMove(String input) {
+        System.out.println("Oponents move: " + input);
         if (input.contains("rock")) {
             return Move.ROCK;
         }
@@ -66,7 +69,7 @@ public class Client {
 
     private void write(String output) {
         try {
-            Thread.sleep(1000);
+            Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
