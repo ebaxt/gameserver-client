@@ -30,27 +30,24 @@ public class Client {
         String input;
         do {
             input = readLine();
-            System.out.println(input);
             if (null != input) {
                 if (input.startsWith(":select")) {
                     write(gameStrategy.firstMove().print());
                 }
                 if (input.startsWith("[:winner")) {
-                    System.out.println(readLine());
+                    readLine();
                     write(gameStrategy.onWin(getOponentMove(input)).print());
                 }
                 if (input.startsWith("[:looser")) {
-                    System.out.println(readLine());
-
+                    readLine();
                     write(gameStrategy.onLoss(getOponentMove(input)).print());
                 }
                 if (input.startsWith("[:tie")) {
-                    System.out.println(readLine());
-
+                    readLine();
                     write(gameStrategy.onTie().print());
                 }
             }
-        } while (true);
+        } while (input != null);
     }
 
     private Move getOponentMove(String input) {
@@ -68,11 +65,6 @@ public class Client {
     }
 
     private void write(String output) {
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
         System.out.println(output);
         out.println(output);
     }
